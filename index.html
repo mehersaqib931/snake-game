@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🐍 Snake Game</title>
+    <link rel="icon" href="/favicon.ico" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ── Reset ────────────────────────────────────────────── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        user-select: none;
+      }
+
+      /* ── Page ─────────────────────────────────────────────── */
+      body {
+        background-color: #0f0f1a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      }
+
+      /* ── Game Wrapper ─────────────────────────────────────── */
+      #game-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 0 40px rgba(0, 255, 136, 0.15);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      /* ── HUD Bar ──────────────────────────────────────────── */
+      #hud-bar {
+        width: 100%;
+        background-color: #12122a;
+        border-bottom: 1px solid #1e1e3a;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding: 10px 16px;
+        gap: 8px;
+      }
+
+      /* ── HUD Item ─────────────────────────────────────────── */
+      .hud-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        min-width: 80px;
+      }
+
+      .hud-label {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #555577;
+      }
+
+      .hud-value {
+        font-size: 20px;
+        font-weight: 700;
+        color: #00ff88;
+        line-height: 1;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* ── Divider between HUD items ────────────────────────── */
+      .hud-divider {
+        width: 1px;
+        height: 32px;
+        background-color: #1e1e3a;
+      }
+
+      /* ── Canvas ───────────────────────────────────────────── */
+      #gameCanvas {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="game-wrapper">
+      <!-- HUD Bar -->
+      <div id="hud-bar">
+        <div class="hud-item">
+          <span class="hud-label">Score</span>
+          <span class="hud-value" id="hud-score">0</span>
+        </div>
+        <div class="hud-divider"></div>
+        <div class="hud-item">
+          <span class="hud-label">Best</span>
+          <span class="hud-value" id="hud-best">0</span>
+        </div>
+        <div class="hud-divider"></div>
+        <div class="hud-item">
+          <span class="hud-label">Length</span>
+          <span class="hud-value" id="hud-length">3</span>
+        </div>
+        <div class="hud-divider"></div>
+        <div class="hud-item">
+          <span class="hud-label">Time</span>
+          <span class="hud-value" id="hud-time">00:00</span>
+        </div>
+      </div>
+
+      <!-- Game Canvas -->
+      <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
