@@ -45,20 +45,34 @@ export class StageSelectScreen {
         </div>
 
         <div class="screen-hint">Use Arrow Keys to control the snake</div>
+        <button class="btn-quit" id="stage-quit">✕ Quit Game</button>
       </div>
     `;
     return el;
   }
 
-  // ── Bind stage button clicks ──────────────────────────────────────
+  // ── Bind stage button clicks and quit ────────────────────────────
   _bindEvents() {
     this._el.querySelectorAll(".stage-card").forEach((btn) => {
       btn.addEventListener("click", () => {
         const stage = parseInt(btn.dataset.stage, 10);
         this.hide();
+        // Remove esc listener when game starts
+        window.removeEventListener("keydown", this._escHandler);
         this._onStageSelect(stage);
       });
     });
+
+    // Quit button → close tab
+    this._el.querySelector("#stage-quit").addEventListener("click", () => {
+      window.close();
+    });
+
+    // Escape key → close tab
+    this._escHandler = (e) => {
+      if (e.key === "Escape") window.close();
+    };
+    window.addEventListener("keydown", this._escHandler);
   }
 
   // ── Show screen with fade in ──────────────────────────────────────
