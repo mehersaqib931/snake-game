@@ -1,23 +1,22 @@
 /**
- * gameOver.js — Game Over Screen
+ * pause.js — Pause Screen
  * Responsibilities:
- *   - Render HTML overlay showing final score, best, time
- *   - Fire onRestart() for same-stage replay
- *   - Fire onChangeStage() to return to stage select
+ *   - Render HTML overlay when game is paused
+ *   - Fire onResume() when player clicks Resume or presses P
  *   - Fade in/out smoothly via CSS transition
  *
- * Does NOT: manage game state, draw on canvas, track scores
+ * Does NOT: manage game state, draw on canvas, handle game logic
  */
 
-export class GameOverScreen {
+export class PauseScreen {
   /**
-   * @param {HTMLElement}        container      - parent element (game-wrapper)
-   * @param {function():void}    onRestart      - called on Play Again
-   * @param {function():void}    onChangeStage  - called on Change Stage
+   * @param {HTMLElement}     container - parent element (game-wrapper)
+   * @param {function():void} onResume  - called when player resumes
+   * @param {function():void} onQuit    - called when player quits to stage select
    */
-  constructor(container, onRestart, onChangeStage) {
-    this._onRestart = onRestart;
-    this._onChangeStage = onChangeStage;
+  constructor(container, onResume, onQuit) {
+    this._onResume = onResume;
+    this._onQuit = onQuit;
     this._el = this._createElement();
     container.appendChild(this._el);
     this._bindEvents();
@@ -27,62 +26,43 @@ export class GameOverScreen {
   _createElement() {
     const el = document.createElement("div");
     el.className = "screen-overlay";
-    el.id = "screen-game-over";
+    el.id = "screen-pause";
     el.innerHTML = `
       <div class="screen-box">
-        <div class="screen-title">Game Over</div>
-
-        <div class="gameover-stats">
-          <div class="stat-row">
-            <span class="stat-label">Score</span>
-            <span class="stat-value" id="go-score">0</span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-label">Best</span>
-            <span class="stat-value accent" id="go-best">0</span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-label">Length</span>
-            <span class="stat-value" id="go-length">3</span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-label">Time</span>
-            <span class="stat-value" id="go-time">00:00</span>
-          </div>
-        </div>
+        <div class="screen-title">Paused</div>
+        <div class="screen-subtitle">Take a breather 🌿</div>
 
         <div class="screen-actions">
-          <button class="btn-primary" id="go-restart">Play Again</button>
-          <button class="btn-secondary" id="go-change-stage">Change Stage</button>
+          <button class="btn-primary" id="pause-resume">Resume</button>
+          <button class="btn-secondary" id="pause-quit">Quit to Stage Select</button>
         </div>
+
+        <div class="screen-hint">Press <kbd>P</kbd> or <kbd>Esc</kbd> to resume</div>
       </div>
     `;
     return el;
   }
 
-  // ── Bind button events ────────────────────────────────────────────
+  // ── Bind resume and quit buttons ──────────────────────────────────
   _bindEvents() {
-    this._el.querySelector("#go-restart").addEventListener("click", () => {
-      this.hide();
-      this._onRestart();
+    this._el.querySelector("#pause-resume").addEventListener("click", () => {
+      this._resume();
     });
 
-    this._el.querySelector("#go-change-stage").addEventListener("click", () => {
+    this._el.querySelector("#pause-quit").addEventListener("click", () => {
       this.hide();
-      this._onChangeStage();
+      this._onQuit();
     });
   }
 
-  // ── Show screen with final game data ─────────────────────────────
-  /**
-   * @param {{ score: number, best: number, length: number, time: string }} data
-   */
-  show(data) {
-    this._el.querySelector("#go-score").textContent = data.score;
-    this._el.querySelector("#go-best").textContent = data.best;
-    this._el.querySelector("#go-length").textContent = data.length;
-    this._el.querySelector("#go-time").textContent = data.time;
+  // ── Internal resume handler ───────────────────────────────────────
+  _resume() {
+    this.hide();
+    this._onResume();
+  }
 
+  // ── Show screen with fade in ──────────────────────────────────────
+  show() {
     this._el.style.display = "flex";
     requestAnimationFrame(() => {
       this._el.classList.add("visible");

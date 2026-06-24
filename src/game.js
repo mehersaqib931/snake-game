@@ -66,7 +66,11 @@ export class Game {
       () => this._backToStageSelect(),
     );
 
-    this.pauseScreen = new PauseScreen(wrapper, () => this._onResume());
+    this.pauseScreen = new PauseScreen(
+      wrapper,
+      () => this._onResume(),
+      () => this._backToStageSelect(),
+    );
 
     // Bind loop so rAF reference stays consistent
     this._loop = this._loop.bind(this);
