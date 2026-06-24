@@ -44,6 +44,7 @@
         box-shadow: 0 0 40px rgba(0, 255, 136, 0.15);
         border-radius: 4px;
         overflow: hidden;
+        position: relative;
       }
 
       /* ── HUD Bar ──────────────────────────────────────────── */
@@ -93,6 +94,194 @@
       /* ── Canvas ───────────────────────────────────────────── */
       #gameCanvas {
         display: block;
+      }
+
+      /* ── Screen Overlays (shared) ─────────────────────────── */
+      .screen-overlay {
+        position: absolute;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(15, 15, 26, 0.92);
+        opacity: 0;
+        transition: opacity 0.25s ease;
+        z-index: 10;
+        border-radius: 4px;
+      }
+
+      .screen-overlay.visible {
+        opacity: 1;
+      }
+
+      .screen-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 40px 48px;
+        text-align: center;
+      }
+
+      .screen-title {
+        font-size: 36px;
+        font-weight: 700;
+        color: #00ff88;
+        letter-spacing: 0.04em;
+      }
+
+      .screen-subtitle {
+        font-size: 14px;
+        color: #888aaa;
+        letter-spacing: 0.06em;
+      }
+
+      .screen-hint {
+        font-size: 12px;
+        color: #555577;
+        letter-spacing: 0.05em;
+        margin-top: 4px;
+      }
+
+      /* ── Stage Cards ──────────────────────────────────────── */
+      .stage-cards {
+        display: flex;
+        gap: 16px;
+        margin: 8px 0;
+      }
+
+      .stage-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        padding: 20px 24px;
+        background: #12122a;
+        border: 1px solid #1e1e3a;
+        border-radius: 10px;
+        cursor: pointer;
+        transition:
+          border-color 0.2s,
+          background 0.2s,
+          transform 0.15s;
+        min-width: 130px;
+        color: #ffffff;
+        font-family: inherit;
+      }
+
+      .stage-card:hover {
+        border-color: #00ff88;
+        background: #1a1a3a;
+        transform: translateY(-2px);
+      }
+
+      .stage-number {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #00ff88;
+      }
+
+      .stage-name {
+        font-size: 18px;
+        font-weight: 700;
+        color: #ffffff;
+      }
+
+      .stage-desc {
+        font-size: 11px;
+        color: #666888;
+        line-height: 1.5;
+        margin-top: 4px;
+      }
+
+      /* ── Game Over Stats ──────────────────────────────────── */
+      .gameover-stats {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        background: #12122a;
+        border: 1px solid #1e1e3a;
+        border-radius: 10px;
+        padding: 16px 24px;
+      }
+
+      .stat-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .stat-label {
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #555577;
+      }
+
+      .stat-value {
+        font-size: 18px;
+        font-weight: 700;
+        color: #ffffff;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .stat-value.accent {
+        color: #00ff88;
+      }
+
+      /* ── Buttons ──────────────────────────────────────────── */
+      .screen-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        width: 100%;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        cursor: pointer;
+        transition:
+          opacity 0.2s,
+          transform 0.15s;
+      }
+
+      .btn-primary {
+        background: #00ff88;
+        color: #0f0f1a;
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: #888aaa;
+        border: 1px solid #1e1e3a;
+      }
+
+      .btn-primary:hover,
+      .btn-secondary:hover {
+        opacity: 0.85;
+        transform: translateY(-1px);
+      }
+
+      kbd {
+        background: #1e1e3a;
+        border: 1px solid #333355;
+        border-radius: 4px;
+        padding: 1px 6px;
+        font-size: 11px;
+        color: #aaaacc;
+        font-family: inherit;
       }
     </style>
   </head>
